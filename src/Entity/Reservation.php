@@ -10,6 +10,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Reservation
 {
+    public const STATUS_CANCELLED = 'cancelled';
+    public const STATUS_INITIAL = 'initial';
+    public const STATUS_ACTIVE = 'active';
+    public const STATUS_COMPLETED = 'completed';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

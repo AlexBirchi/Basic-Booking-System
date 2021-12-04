@@ -10,6 +10,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class RoomBeds
 {
+    public const BED_SINGLE = 'single';
+    public const BED_DOUBLE = 'double';
+    public const BED_MATRIMONIAL = 'matrimonial';
+    public const BED_BUNK_SINGLE = 'bunk single';
+    public const BED_BUNK_DOUBLE = 'bunk single';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
