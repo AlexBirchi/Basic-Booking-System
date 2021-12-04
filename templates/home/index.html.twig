@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block htmlTag %}<html lang="en" class="h-100">{% endblock %}
+
+{% block title %}Welcome!{% endblock %}
+
+{% block stylesheets %}
+    <link href="{{ asset('css/cover.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<body class="d-flex h-100 text-center text-white bg-dark">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <header class="mb-auto">
+            <div>
+                <h3 class="float-md-start mb-0">BBS</h3>
+                <nav class="nav nav-masthead justify-content-center float-md-end">
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    <a class="nav-link" href="#">Stays</a>
+                    <a class="nav-link" href="#">Contact</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="px-3">
+            <h1>Welcome!</h1>
+            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid asperiores dicta eum facere illum, ipsam iste minima nam odio quaerat repellat similique tempora totam? Accusamus, enim inventore! Minima, optio porro!</p>
+            <p class="lead">
+                <a href="#" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Explore</a>
+            </p>
+        </main>
+
+        <footer class="mt-auto text-white-50">
+            <p><a href="https://github.com/AlexBirchi/Basic-Booking-System" class="text-white">Basic booking system</a>, by <a href="https://github.com/AlexBirchi" class="text-white">Alex Birchi</a>.</p>
+        </footer>
+    </div>
+</body>
+{% endblock %}
