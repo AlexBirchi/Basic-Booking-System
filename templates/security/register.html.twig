@@ -2,15 +2,55 @@
 
 {% block title %}Hello SecurityController!{% endblock %}
 
-{% block body %}
-    {{ form_start(form) }}
-        {{ form_row(form.firstName) }}
-        {{ form_row(form.lastName) }}
-        {{ form_row(form.email) }}
-        {{ form_row(form.phoneNumber) }}
-        {{ form_row(form.plainPassword.first) }}
-        {{ form_row(form.plainPassword.second) }}
+{% block stylesheets %}
+    <link href="{{ asset('css/security.css') }}" rel="stylesheet">
+{% endblock %}
 
-        <button type="submit">Register!</button>
-    {{ form_end(form) }}
+{% block body %}
+    <body class="text-center">
+
+    <main class="form-security">
+        {{ form_start(form) }}
+            <img class="mb-4" src="{{ asset('images/bootstrap_logo.png') }}" alt="" width="72" height="57">
+            <h1 class="h3 mb-3 fw-normal">Sign Up</h1>
+
+            <div class="form-floating">
+                {{ form_widget(form.firstName, {'attr': {'class': 'form-control', 'id': 'floatingInput', 'placeholder':'First Name'}}) }}
+                <label for="floatingInput">First Name</label>
+            </div>
+            <div class="form-floating">
+                {{ form_widget(form.lastName, {'attr': {'class': 'form-control', 'id': 'floatingInput', 'placeholder':'Last Name'}}) }}
+                <label for="floatingInput">Last Name</label>
+            </div>
+            <div class="form-floating">
+                {{ form_widget(form.email, {'attr': {'class': 'form-control', 'id': 'floatingInput', 'placeholder':'Email'}}) }}
+                <label for="floatingInput">Email</label>
+            </div>
+            <div class="form-floating">
+                {{ form_widget(form.phoneNumber, {'attr': {'class': 'form-control', 'id': 'floatingInput', 'placeholder':'Phone Number'}}) }}
+                <label for="floatingInput">Phone Number</label>
+            </div>
+            <div class="form-floating">
+                {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control', 'id': 'floatingPassword', 'placeholder':'Password'}}) }}
+                <label for="floatingPassword">Password</label>
+            </div>
+            <div class="form-floating" style="margin-bottom: 10px">
+                {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control', 'id': 'floatingPassword', 'placeholder':'Repeat Password'}}) }}
+                <label for="floatingPassword">Repeat Password</label>
+            </div>
+
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" value="i-agree" required/>
+                    I agree with the <a href="#">Terms of service</a>
+                </label>
+            </div>
+
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign Up</button>
+        {{ form_end(form) }}
+        <p class="mt-5 mb-3 text-muted">&copy; 2021</p>
+    </main>
+
+    </body>
+
 {% endblock %}
