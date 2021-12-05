@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=PropertyRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Property
 {
@@ -126,11 +127,12 @@ class Property
         return $this->likes;
     }
 
-    public function setLikes(int $likes): self
+    /**
+     * @ORM\PrePersist
+     */
+    public function initializeLikes()
     {
-        $this->likes = $likes;
-
-        return $this;
+        $this->likes = 0;
     }
 
     /**
