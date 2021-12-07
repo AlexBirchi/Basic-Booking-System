@@ -10,19 +10,21 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class RoomBeds
 {
-    public const BED_SINGLE = 'single';
-    public const BED_DOUBLE = 'double';
-    public const BED_MATRIMONIAL = 'matrimonial';
-    public const BED_BUNK_SINGLE = 'bunk single';
-    public const BED_BUNK_DOUBLE = 'bunk double';
-    public const BED_EXTENSIBLE = 'extensible sofa';
+    public const BED_SINGLE = 'Single bed';
+    public const BED_TWO_SINGLE = 'Two single beds';
+    public const BED_DOUBLE = 'Double bed';
+    public const BED_MATRIMONIAL = 'Matrimonial bed';
+    public const BED_SINGLE_BUNK = 'Single bunk bed';
+    public const BED_DOUBLE_BUNK = 'Double bunk bed';
+    public const BED_EXTENSIBLE = 'Extensible sofa';
 
     public const BEDS_ARRAY = [
         self::BED_SINGLE => self::BED_SINGLE,
+        self::BED_TWO_SINGLE => self::BED_TWO_SINGLE,
         self::BED_DOUBLE => self::BED_DOUBLE,
         self::BED_MATRIMONIAL => self::BED_MATRIMONIAL,
-        self::BED_BUNK_SINGLE => self::BED_BUNK_SINGLE,
-        self::BED_BUNK_DOUBLE => self::BED_BUNK_DOUBLE,
+        self::BED_SINGLE_BUNK => self::BED_SINGLE_BUNK,
+        self::BED_DOUBLE_BUNK => self::BED_DOUBLE_BUNK,
         self::BED_EXTENSIBLE => self::BED_EXTENSIBLE
     ];
 
