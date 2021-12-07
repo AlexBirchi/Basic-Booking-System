@@ -4,9 +4,11 @@ namespace App\Form;
 
 use App\Entity\Facility;
 use App\Entity\Room;
+use App\Entity\RoomBeds;
 use App\Repository\FacilityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -20,6 +22,12 @@ class RoomType extends AbstractType
             ->add('roomType', EntityType::class, [
                 'class' => \App\Entity\RoomType::class,
                 'choice_label' => 'name',
+            ])
+            ->add('beds', ChoiceType::class, [
+                'mapped' => false,
+                'expanded' => true,
+                'multiple' => true,
+                'choices' => RoomBeds::BEDS_ARRAY,
             ])
             ->add('facilities', EntityType::class, [
                 'class' => Facility::class,

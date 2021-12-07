@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Property;
 use App\Entity\Room;
+use App\Entity\RoomBeds;
 use App\Form\RoomType;
 use App\Repository\RoomRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -32,6 +33,14 @@ class RoomController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $room->setProperty($property);
+
+            $roomBed = new RoomBeds();
+            foreach ($form->get('beds')->getData() as $bed) {
+                $roomBed->setBed($bed);
+                $roomBed->setRoom($room);
+                $room->addRoomBed($roomBed);
+                $entityManager->persist($roomBed);
+            }
             $entityManager->persist($room);
             $entityManager->flush();
 

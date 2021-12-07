@@ -14,7 +14,17 @@ class RoomBeds
     public const BED_DOUBLE = 'double';
     public const BED_MATRIMONIAL = 'matrimonial';
     public const BED_BUNK_SINGLE = 'bunk single';
-    public const BED_BUNK_DOUBLE = 'bunk single';
+    public const BED_BUNK_DOUBLE = 'bunk double';
+    public const BED_EXTENSIBLE = 'extensible sofa';
+
+    public const BEDS_ARRAY = [
+        self::BED_SINGLE => self::BED_SINGLE,
+        self::BED_DOUBLE => self::BED_DOUBLE,
+        self::BED_MATRIMONIAL => self::BED_MATRIMONIAL,
+        self::BED_BUNK_SINGLE => self::BED_BUNK_SINGLE,
+        self::BED_BUNK_DOUBLE => self::BED_BUNK_DOUBLE,
+        self::BED_EXTENSIBLE => self::BED_EXTENSIBLE
+    ];
 
     /**
      * @ORM\Id
