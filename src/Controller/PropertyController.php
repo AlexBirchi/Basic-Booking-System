@@ -25,6 +25,8 @@ class PropertyController extends AbstractController
     #[Route('/new', name: 'property_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $property = new Property();
         $form = $this->createForm(PropertyType::class, $property);
         $form->handleRequest($request);
@@ -53,6 +55,8 @@ class PropertyController extends AbstractController
     #[Route('/{id}/edit', name: 'property_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Property $property, EntityManagerInterface $entityManager): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $form = $this->createForm(PropertyType::class, $property);
         $form->handleRequest($request);
 
@@ -71,6 +75,8 @@ class PropertyController extends AbstractController
     #[Route('/{id}', name: 'property_delete', methods: ['POST'])]
     public function delete(Request $request, Property $property, EntityManagerInterface $entityManager): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         if ($this->isCsrfTokenValid('delete'.$property->getId(), $request->request->get('_token'))) {
             $entityManager->remove($property);
             $entityManager->flush();

@@ -27,6 +27,8 @@ class RoomController extends AbstractController
     #[Route('/new/{id}', name: 'room_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, Property $property): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $room = new Room();
         $form = $this->createForm(RoomType::class, $room);
         $form->handleRequest($request);
@@ -64,6 +66,8 @@ class RoomController extends AbstractController
     #[Route('/{id}/edit', name: 'room_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Room $room, EntityManagerInterface $entityManager): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $form = $this->createForm(RoomType::class, $room);
         $form->handleRequest($request);
 
@@ -82,6 +86,8 @@ class RoomController extends AbstractController
     #[Route('/{id}', name: 'room_delete', methods: ['POST'])]
     public function delete(Request $request, Room $room, EntityManagerInterface $entityManager): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         if ($this->isCsrfTokenValid('delete'.$room->getId(), $request->request->get('_token'))) {
             $entityManager->remove($room);
             $entityManager->flush();
