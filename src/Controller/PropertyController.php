@@ -7,6 +7,7 @@ use App\Form\PropertyType;
 use App\Repository\PropertyRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -42,6 +43,25 @@ class PropertyController extends AbstractController
             'property' => $property,
             'form' => $form,
         ]);
+    }
+
+    #[Route('/like', name: 'property_like')]
+    public function like(Request $request, EntityManagerInterface $entityManager)
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        if ($request->isXmlHttpRequest()) {
+            $propertyId = $request->request->get('propertyId');
+            try {
+                $property = $entityManager->getRepository(Property::class)->find($propertyId);
+                $property->incrementLikes();
+                $entityManager->flush();
+            } catch (\Exception $exception) {
+                return new JsonResponse(false);
+            }
+            return new JsonResponse(true);
+        }
+        return $this->redirectToRoute('index');
     }
 
     #[Route('/{id}', name: 'property_show', methods: ['GET'])]

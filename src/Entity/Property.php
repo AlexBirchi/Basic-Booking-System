@@ -135,6 +135,11 @@ class Property
         $this->likes = 0;
     }
 
+    public function incrementLikes()
+    {
+        $this->likes += 1;
+    }
+
     /**
      * @return Collection|Facility[]
      */
