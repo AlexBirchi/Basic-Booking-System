@@ -43,9 +43,9 @@
                             {% endif %}
                         {% endfor %}
                     </td>
-                    <td>${{ room.basePrice / 1000}}/night</td>
+                    <td>${{ room.basePrice / 100}}/night</td>
                     <td>
-                        <a href="#" class="rounded-pill btn btn-warning btn-sm"><i class="fa fa-calendar" aria-hidden="true"></i> Book now</a>
+                        <a href="{{ path('checkout', {'id': room.id}) }}" class="rounded-pill btn btn-warning btn-sm"><i class="fa fa-calendar" aria-hidden="true"></i> Book now</a>
                         <a href="{{ path('room_show', {'id': room.id}) }}" class="rounded-circle btn btn-success btn-sm"><i class="fas fa-eye"></i></a>
                     </td>
                 </tr>

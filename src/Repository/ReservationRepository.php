@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Reservation;
+use App\Entity\Room;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -17,6 +19,25 @@ class ReservationRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Reservation::class);
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function checkRoomAvailability(Room $room, \DateTime $checkIn, \DateTime $checkOut): bool
+    {
+        $reservation = $this->createQueryBuilder('r')
+            ->andWhere('r.room = :roomId')
+            ->andWhere('r.state IN (:states)')
+            ->andWhere(':checkIn BETWEEN r.checkIn AND r.checkOut OR :checkOut BETWEEN r.checkIn AND r.checkOut')
+            ->setParameter('roomId', $room->getId())
+            ->setParameter('states', [Reservation::STATUS_INITIAL, Reservation::STATUS_ACTIVE])
+            ->setParameter('checkIn', $checkIn)
+            ->setParameter('checkOut', $checkOut)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        return !$reservation;
     }
 
     // /**

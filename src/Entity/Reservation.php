@@ -4,9 +4,11 @@ namespace App\Entity;
 
 use App\Repository\ReservationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=ReservationRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Reservation
 {
@@ -23,10 +25,10 @@ class Reservation
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Property::class, inversedBy="reservations")
+     * @ORM\ManyToOne(targetEntity=Room::class, inversedBy="reservations")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $property;
+    private $room;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reservations")
@@ -49,19 +51,33 @@ class Reservation
      */
     private $state;
 
+    public function __construct
+    (
+        UserInterface $user,
+        Room $room,
+        \DateTime $checkIn,
+        \DateTime $checkOut
+    )
+    {
+        $this->user = $user;
+        $this->room = $room;
+        $this->checkIn = $checkIn;
+        $this->checkOut = $checkOut;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getProperty(): ?Property
+    public function getRoom(): ?Room
     {
-        return $this->property;
+        return $this->room;
     }
 
-    public function setProperty(?Property $property): self
+    public function setRoom(?Room $room): self
     {
-        $this->property = $property;
+        $this->room = $room;
 
         return $this;
     }
@@ -112,5 +128,13 @@ class Reservation
         $this->state = $state;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setInitialState()
+    {
+        $this->state = self::STATUS_INITIAL;
     }
 }

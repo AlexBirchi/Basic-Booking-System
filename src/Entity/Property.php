@@ -57,16 +57,10 @@ class Property
      */
     private $rooms;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Reservation::class, mappedBy="property")
-     */
-    private $reservations;
-
     public function __construct()
     {
         $this->facilities = new ArrayCollection();
         $this->rooms = new ArrayCollection();
-        $this->reservations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -188,36 +182,6 @@ class Property
             // set the owning side to null (unless already changed)
             if ($room->getProperty() === $this) {
                 $room->setProperty(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Reservation[]
-     */
-    public function getReservations(): Collection
-    {
-        return $this->reservations;
-    }
-
-    public function addReservation(Reservation $reservation): self
-    {
-        if (!$this->reservations->contains($reservation)) {
-            $this->reservations[] = $reservation;
-            $reservation->setProperty($this);
-        }
-
-        return $this;
-    }
-
-    public function removeReservation(Reservation $reservation): self
-    {
-        if ($this->reservations->removeElement($reservation)) {
-            // set the owning side to null (unless already changed)
-            if ($reservation->getProperty() === $this) {
-                $reservation->setProperty(null);
             }
         }
 
