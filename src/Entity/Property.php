@@ -6,6 +6,7 @@ use App\Repository\PropertyRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=PropertyRepository::class)
@@ -56,6 +57,12 @@ class Property
      * @ORM\OneToMany(targetEntity=Room::class, mappedBy="property", orphanRemoval=true)
      */
     private $rooms;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="properties")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $owner;
 
     public function __construct()
     {
@@ -184,6 +191,18 @@ class Property
                 $room->setProperty(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOwner(): ?UserInterface
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?UserInterface $owner): self
+    {
+        $this->owner = $owner;
 
         return $this;
     }

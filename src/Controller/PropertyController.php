@@ -6,8 +6,10 @@ use App\Entity\Property;
 use App\Form\PropertyType;
 use App\Repository\PropertyRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,6 +35,7 @@ class PropertyController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $property->setOwner($this->getUser());
             $entityManager->persist($property);
             $entityManager->flush();
 
@@ -46,7 +49,7 @@ class PropertyController extends AbstractController
     }
 
     #[Route('/like', name: 'property_like')]
-    public function like(Request $request, EntityManagerInterface $entityManager)
+    public function like(Request $request, EntityManagerInterface $entityManager): RedirectResponse|JsonResponse
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 

@@ -24,8 +24,10 @@
                     <td>{{ property.description }}</td>
                     <td>{{ property.likes }}</td>
                     <td>
-                        <a href="{{ path('property_show', {'id': property.id}) }}" class="rounded-circle btn btn-success btn-sm"><i class="fas fa-eye"></i></a></a>
-                        <a href="{{ path('property_edit', {'id': property.id}) }}" class="rounded-circle btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                        <a href="{{ path('property_show', {'id': property.id}) }}" class="rounded-circle btn btn-success btn-sm"><i class="fas fa-eye"></i></a>
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') and property.owner.id == app.user.id %}
+                            <a href="{{ path('property_edit', {'id': property.id}) }}" class="rounded-circle btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                        {% endif %}
                     </td>
                 </tr>
             {% else %}

@@ -22,8 +22,18 @@ class ReservationController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        $checkIn = new \DateTime('Mon, 3 Jan 2022 12:00:00');
-        $checkOut = new \DateTime('Fri, 7 Jan 2022 12:00:00');
+        $checkIn = new \DateTime('Mon, 23 Jan 2022 12:00:00');
+        $checkOut = new \DateTime('Fri, 27 Jan 2022 12:00:00');
+
+        if ($checkIn->getTimestamp() > $checkOut->getTimestamp()) {
+            $this->addFlash('danger', 'Invalid reservation interval.');
+            return $this->redirectToRoute('property_index');
+        }
+
+        if ($checkIn->getTimestamp() < time()) {
+            $this->addFlash('danger', 'Reservation must be done in a future time.');
+            return $this->redirectToRoute('property_index');
+        }
 
         $isAvailable = $reservationRepository->checkRoomAvailability($room, $checkIn, $checkOut);
 
@@ -85,8 +95,13 @@ class ReservationController extends AbstractController
             $checkOutDate
         );
 
-        $entityManager->persist($reservation);
-        $entityManager->flush();
+        try {
+            $entityManager->persist($reservation);
+            $entityManager->flush();
+        } catch (\Exception $e) {
+            $this->addFlash('danger', 'Something went wrong.');
+            return $this->redirectToRoute('index');
+        }
 
         $this->addFlash('success', 'Your reservation has been placed!');
         return $this->redirectToRoute('property_index');
